@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS APPTIENDA;
+CREATE DATABASE APPTIENDA;
 USE APPTIENDA;
 
 -- 1. Categorías de productos
@@ -51,7 +51,7 @@ CREATE TABLE DIRECCION_ENTREGAS (
     CONSTRAINT fk_direccion_cliente FOREIGN KEY (id_cliente) REFERENCES CLIENTES(id_cliente)
 );
 
--- 5. Carrito de Compras activo del usuario (1 a 0..1)
+-- 5. Carrito de Compras 
 CREATE TABLE CARRITOS (
     id_carrito INT AUTO_INCREMENT,
     id_cliente INT NOT NULL UNIQUE,
@@ -82,14 +82,14 @@ CREATE TABLE PEDIDOS (
     id_cliente INT NOT NULL,
     id_direccion_entrega INT NOT NULL,
     fecha DATE NOT NULL,
-    estado ENUM('CREADO', 'CONFIRMADO', 'EN_PREPARACION', 'ENVIADO', 'ENTREGADO', 'CANCELADO') NOT NULL DEFAULT 'CREADO',
+    estado_pedidos INTEGER DEFAULT 1, 
     total FLOAT NOT NULL DEFAULT 0,
     habilitado TINYINT NOT NULL DEFAULT 1,
 
     CONSTRAINT pk_pedido PRIMARY KEY (id_pedido),
     CONSTRAINT fk_pedido_cliente FOREIGN KEY (id_cliente) REFERENCES CLIENTES(id_cliente),
     CONSTRAINT fk_pedido_direccion FOREIGN KEY (id_direccion_entrega) REFERENCES DIRECCION_ENTREGAS(id_direccion_entrega)
-);
+)COMMENT="ENUM('CREADO=1', 'CONFIRMADO=2', 'EN_PREPARACION=3', 'ENVIADO=4', 'ENTREGADO=5', 'CANCELADO=6') NOT NULL DEFAULT 'CREADO'";
 
 -- 8. Detalle/Líneas de los Pedidos
 CREATE TABLE DETALLE_PEDIDOS (
@@ -112,14 +112,14 @@ CREATE TABLE PAGOS (
     monto FLOAT NOT NULL,
     fecha DATETIME NOT NULL,
     metodo_pago VARCHAR(50) NOT NULL,
-    estado ENUM('PENDIENTE', 'APROBADO', 'RECHAZADO', 'REEMBOLSADO') NOT NULL DEFAULT 'PENDIENTE',
+    estado_pagos INTEGER DEFAULT 1,
     habilitado TINYINT NOT NULL DEFAULT 1,
 
     CONSTRAINT pk_pago PRIMARY KEY (id_pago),
     CONSTRAINT fk_pago_pedido FOREIGN KEY (id_pedido) REFERENCES PEDIDOS(id_pedido)
-);
+)COMMENT="ENUM('PENDIENTE=1', 'APROBADO=2', 'RECHAZADO=3', 'REEMBOLSADO=4') NOT NULL DEFAULT 'PENDIENTE'";
 
--- 10. Información de Envíos (Relación 1 a 0..1 con Pedido)
+-- 10. Información de Envíos 
 CREATE TABLE ENVIOS (
     id_envio INT AUTO_INCREMENT,
     id_pedido INT NOT NULL UNIQUE,
