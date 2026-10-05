@@ -152,6 +152,7 @@ CREATE TABLE ENVIOS (
     numero_seguimiento VARCHAR(100),
     transportista VARCHAR(50),
     habilitado TINYINT NOT NULL DEFAULT 1,
+    
     CONSTRAINT pk_envio PRIMARY KEY (id_envio),
     CONSTRAINT fk_envio_pedido FOREIGN KEY (id_pedido) REFERENCES PEDIDOS(id_pedido)
 );

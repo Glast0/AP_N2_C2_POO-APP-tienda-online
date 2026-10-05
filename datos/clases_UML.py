@@ -202,7 +202,6 @@ class Producto:
 
 class ItemCarrito:
     """Clase de asociación: CarritoDeCompra <-> Producto."""
-
     def __init__(self, producto: Producto, cantidad: int):
         if cantidad <= 0:
             raise ValueError("La cantidad debe ser mayor a 0.")
@@ -521,7 +520,7 @@ class Cliente:
     @staticmethod
     def _validar_rut(rut: str) -> str:
         rut_limpio = rut.replace(".", "").replace("-", "")
-        if len(rut_limpio) < 8:
+        if len(rut_limpio) < 8 :
             raise ValueError("RUT inválido.")
         return rut
 
