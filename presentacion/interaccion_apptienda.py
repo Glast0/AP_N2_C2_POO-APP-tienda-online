@@ -2,11 +2,17 @@ from datos.repositorios.repositorio_carritos import listado_carritos
 from prettytable import PrettyTable
 
 def lista_carritos():
-    tabla_productos = PrettyTable()
-    tabla_productos.field_names(["Nombre_campo1", "Nombre_campo2"])
+    # Instancia de la clase PrettyTable
+    tabla_carritos = PrettyTable()
+    tabla_carritos.field_names = ['ID Carrito', 'ID Cliente', 'Fecha Creación', 'Habilitado']
 
     carritos = listado_carritos()
-    if listado_carritos:
-        for producto in carritos:
-            tabla_productos.add_row([carritos.id_carrito, ...])
-            print(f"tatata {carritos.id_carrito = } tatata")
+    if carritos:
+        for carrito in carritos:
+            tabla_carritos.add_row([
+                carrito.id_carrito, 
+                carrito.id_cliente, 
+                carrito.fecha_creacion, 
+                carrito.habilitado
+            ])
+        print(tabla_carritos)
