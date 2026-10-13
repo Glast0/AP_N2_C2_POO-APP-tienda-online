@@ -1,12 +1,70 @@
 menu_superior = {
     '1':'Gestión App tienda',
-    '2':'Gestión Usuarios',
-    '3':'Gestión productos',
+    '2':'Gestión Categorías',
+    '3':'Gestión Clientes',
+    '4':'Gestión Productos',
+    '5':'Gestión Direccion_Entrega',
+    '6':'Gestión Pedidos',
+    '7':'Gestión Pagos',
+    '8':'Gestión Envíos',
+    '9':'Gestión Carritos',
+    
     '0':'Salir'
 }
 
 menu_apptienda = {
     '1':'Gestión Lol',
-    '2':'Gestión Usuarios',
+    '2':'Gestión Categorías',
     '0':'Volver al menú anterior'
+}
+
+menu_categorias = {
+    '0': 'Volver',
+    '1': 'Listar categorías',
+    '2': 'Crear categoría',
+}
+
+menu_clientes = {
+    '0': 'Volver',
+    '1': 'Listar clientes',
+    '2': 'Crear cliente',
+}
+
+menu_productos = {
+    '0': 'Volver',
+    '1': 'Listar productos',
+    '2': 'Crear producto',
+}
+
+menu_direcciones = {
+    '0': 'Volver',
+    '1': 'Listar direcciones',
+    '2': 'Crear dirección',
+}
+
+menu_pedidos = {
+    '0': 'Volver',
+    '1': 'Listar pedidos',
+    '2': 'Crear pedido',
+    '3': 'Ver detalle de un pedido',
+}
+
+menu_pagos = {
+    '0': 'Volver',
+    '1': 'Listar pagos',
+    '2': 'Registrar pago',
+}
+
+menu_envios = {
+    '0': 'Volver',
+    '1': 'Listar envíos',
+    '2': 'Registrar envío',
+}
+
+menu_carritos = {
+    '0': 'Volver',
+    '1': 'Listar carritos',
+    '2': 'Crear carrito',
+    '3': 'Agregar producto a un carrito',
+    '4': 'Ver productos de un carrito',
 }

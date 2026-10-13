@@ -1,5 +1,3 @@
-from presentacion.menu import menu_principal
-from datos.repositorios.repositorio_carritos import listado_carritos
+from presentacion import menu_principal
 
-listado_carritos = listado_carritos()
-print(menu_principal)
+menu_principal()
