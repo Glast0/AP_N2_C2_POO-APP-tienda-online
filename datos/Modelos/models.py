@@ -1,5 +1,5 @@
 from peewee import DateField,IntegerField,AutoField,CharField,SQL,DecimalField,Model,DateTimeField,TextField
-# pendiente from decouple import config
+from decouple import config
 from datos.conexion import conectar_db
 from auxiliares import defecto
 
