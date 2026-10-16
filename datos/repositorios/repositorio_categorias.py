@@ -22,3 +22,16 @@ def guardar_categoria(categoria: Categoria):
 
 def buscar_categoria(id_categoria: int):
     return Categoria.get_or_none(Categoria.id_categoria == id_categoria)
+
+def actualizar_categoria(categoria: Categoria):
+    try:
+        categoria.save()
+        print(f'Categoría {categoria.id_categoria} actualizada con éxito.')
+    except IntegrityError as e:
+        print(f"Error de clave única o clave foránea: {e}")
+    except OperationalError as e:
+        print(f"Error operacional (conexión perdida, tabla inexistente o BD bloqueada): {e}")
+    except DataError as e:
+        print(f"El valor ingresado NO corresponde: {e}")
+    except PeeweeException as e:
+        print(f"No se pudieron actualizar los datos por un error genérico: {e}")
