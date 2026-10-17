@@ -8,15 +8,15 @@ from presentacion.presentacion_categorias import solicitar_datos_categoria, soli
 
 from auxiliares import menu_clientes
 from negocio.negocio_cliente import lista_clientes
-from presentacion.presentacion_clientes import solicitar_datos_cliente
+from presentacion.presentacion_clientes import solicitar_datos_cliente, solicitar_modificacion_cliente
 
 from auxiliares import menu_productos
 from negocio.negocio_productos import lista_productos
-from presentacion.presentacion_productos import solicitar_datos_producto
+from presentacion.presentacion_productos import solicitar_datos_producto, solicitar_modificacion_producto
 
 from auxiliares import menu_direcciones
 from negocio.negocio_direccion import lista_direcciones
-from presentacion.presentacion_direcciones import solicitar_datos_direccion
+from presentacion.presentacion_direcciones import solicitar_datos_direccion, solicitar_modificacion_direccion
 
 from auxiliares import menu_pedidos
 from negocio.negocio_pedido import lista_pedidos
@@ -52,6 +52,7 @@ def menu_principal():
             if opcion_sub_menu == '1':  
                 lista_carritos()
 
+        #----------------------------------  CATEGORIAS  ----------------------------------
         elif opcion_usuario == '2':
             for numero, nombre in menu_categorias.items():
                 print(f'[{numero}] - {nombre}')
@@ -67,36 +68,52 @@ def menu_principal():
             elif opcion_sub_menu == '3':
                 solicitar_modificacion_categoria()
 
+        #----------------------------------  CLIENTES  ----------------------------------
         elif opcion_usuario == '3':
             for numero, nombre in menu_clientes.items():
                 print(f'[{numero}] - {nombre}')
         
-            opcion_sub_menu = input('\nIngrese su opción [0-2]: ')
+            opcion_sub_menu = input('\nIngrese su opción [0-3]: ')
             if opcion_sub_menu == '1':
                 lista_clientes()
+
             elif opcion_sub_menu == '2':
                 solicitar_datos_cliente()
 
+            elif opcion_sub_menu == '3':
+                solicitar_modificacion_cliente()
+
+        #----------------------------------  PRODUCTOS  ----------------------------------
         elif opcion_usuario == '4':
             for numero, nombre in menu_productos.items():
                 print(f'[{numero}] - {nombre}')
 
-            opcion_sub_menu = input('\nIngrese su opción [0-2]: ')
+            opcion_sub_menu = input('\nIngrese su opción [0-3]: ')
             if opcion_sub_menu == '1':
                 lista_productos()
+
             elif opcion_sub_menu == '2':
                 solicitar_datos_producto()
+                
+            elif opcion_sub_menu == '3':
+                solicitar_modificacion_producto()
 
+        #----------------------------------  DIRECCIONES  ----------------------------------
         elif opcion_usuario == '5':
             for numero, nombre in menu_direcciones.items():
                 print(f'[{numero}] - {nombre}')
 
-            opcion_sub_menu = input('\nIngrese su opción [0-2]: ')
+            opcion_sub_menu = input('\nIngrese su opción [0-3]: ')
             if opcion_sub_menu == '1':
                 lista_direcciones()
+
             elif opcion_sub_menu == '2':
                 solicitar_datos_direccion()
 
+            elif opcion_sub_menu == '3':
+                solicitar_modificacion_direccion()
+
+        #----------------------------------  PEDIDOS  ----------------------------------
         elif opcion_usuario == '6':
             for numero, nombre in menu_pedidos.items():
                 print(f'[{numero}] - {nombre}')
@@ -109,6 +126,7 @@ def menu_principal():
             elif opcion_sub_menu == '3':
                 solicitar_detalle_pedido()
 
+        #----------------------------------  PAGOS  ----------------------------------
         elif opcion_usuario == '7':
             for numero, nombre in menu_pagos.items():
                 print(f'[{numero}] - {nombre}')
@@ -119,6 +137,7 @@ def menu_principal():
             elif opcion_sub_menu == '2':
                 solicitar_datos_pago()
 
+        #----------------------------------  ENVIOS  ----------------------------------
         elif opcion_usuario == '8':
             for numero, nombre in menu_envios.items():
                 print(f'[{numero}] - {nombre}')
@@ -129,6 +148,7 @@ def menu_principal():
             elif opcion_sub_menu == '2':
                 solicitar_datos_envio()
 
+        #----------------------------------  CARRITOS  ----------------------------------
         elif opcion_usuario == '9':
             for numero, nombre in menu_carritos.items():
                 print(f'[{numero}] - {nombre}')

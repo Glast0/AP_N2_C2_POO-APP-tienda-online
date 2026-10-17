@@ -22,3 +22,16 @@ def guardar_direccion(direccion: DireccionEntrega):
 
 def buscar_direccion(id_direccion: int):
     return DireccionEntrega.get_or_none(DireccionEntrega.id_direccion_entrega == id_direccion)
+
+def actualizar_direccion(direccion: DireccionEntrega):
+    try:
+        direccion.save()
+        print(f'Dirección {direccion.id_direccion_entrega} actualizada con éxito.')
+    except IntegrityError as e:
+        print(f"Error de clave única o clave foránea: {e}")
+    except OperationalError as e:
+        print(f"Error operacional (conexión perdida, tabla inexistente o BD bloqueada): {e}")
+    except DataError as e:
+        print(f"El valor ingresado NO corresponde: {e}")
+    except PeeweeException as e:
+        print(f"No se pudieron actualizar los datos por un error genérico: {e}")

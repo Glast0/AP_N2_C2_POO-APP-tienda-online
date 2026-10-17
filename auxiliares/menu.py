@@ -29,18 +29,21 @@ menu_clientes = {
     '0': 'Volver',
     '1': 'Listar clientes',
     '2': 'Crear cliente',
+    '3': 'Modificar Cliente',
 }
 
 menu_productos = {
     '0': 'Volver',
     '1': 'Listar productos',
     '2': 'Crear producto',
+    '3': 'Modificar Producto',
 }
 
 menu_direcciones = {
     '0': 'Volver',
     '1': 'Listar direcciones',
     '2': 'Crear dirección',
+    '3': 'Modificar dirección',
 }
 
 menu_pedidos = {
