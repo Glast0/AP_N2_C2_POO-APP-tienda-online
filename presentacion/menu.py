@@ -30,7 +30,7 @@ from auxiliares import menu_envios
 from negocio.negocio_envio import lista_envios
 from presentacion.presentacion_envios import solicitar_datos_envio
 
-from auxiliares import menu_carritos
+from auxiliares import menu_carritoss
 from negocio.negocio_carritos import lista_carritos
 from presentacion.presentacion_carritos import (
     solicitar_datos_carrito, solicitar_datos_item, solicitar_items_carrito)
@@ -162,6 +162,8 @@ def menu_principal():
                 solicitar_datos_item()
             elif opcion_sub_menu == '4':
                 solicitar_items_carrito()
+            elif opcion_sub_menu == '5':
+                solicitar_eliminar_carrito()
 
         elif opcion_usuario == '0':
             print('Saliendo...')
