@@ -52,15 +52,20 @@ def crear_pedido(id_cliente, id_direccion, items):
         print('El pedido no tiene productos. Pedido NO guardado.')
         return
 
+    # Si un producto se repite, se suman sus cantidades
+    agrupados = {}
+    for id_producto, cantidad in items:
+        if cantidad <= 0:
+            print('La cantidad debe ser mayor a 0. Pedido NO guardado.')
+            return
+        agrupados[id_producto] = agrupados.get(id_producto, 0) + cantidad
+
     detalles = []
     total = 0
-    for id_producto, cantidad in items:
+    for id_producto, cantidad in agrupados.items():
         producto = buscar_producto(id_producto)
         if producto is None:
             print(f'El producto con Id {id_producto} no existe. Pedido NO guardado.')
-            return
-        if cantidad <= 0:
-            print('La cantidad debe ser mayor a 0. Pedido NO guardado.')
             return
         if cantidad > producto.stock_disponible:
             print(f'Stock insuficiente para "{producto.nombre_producto}" '
@@ -70,7 +75,7 @@ def crear_pedido(id_cliente, id_direccion, items):
         detalle = DetallePedido()
         detalle.id_producto = id_producto
         detalle.cantidad = cantidad
-        detalle.precio_unitario = producto.precio  # se guarda el precio de hoy
+        detalle.precio_unitario = producto.precio
         detalles.append(detalle)
         total += cantidad * producto.precio
 

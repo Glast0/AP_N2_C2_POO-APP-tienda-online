@@ -1,6 +1,10 @@
 from datos.modelos.base import database
 from datos.modelos.pedido import Pedido, DetallePedido
+from datos.modelos.producto import Producto
 from peewee import IntegrityError, OperationalError, DataError, PeeweeException
+
+class StockInsuficiente(Exception):
+    pass
 
 def listado_pedidos():
     pedidos = Pedido.select()
@@ -15,13 +19,23 @@ def buscar_pedido(id_pedido: int):
 
 def guardar_pedido(pedido: Pedido, detalles: list):
     try:
-        # atomic(): si algo falla, se deshace todo (cabecera y detalles)
         with database.atomic():
             pedido.save()
             for detalle in detalles:
                 detalle.id_pedido = pedido.id_pedido
                 detalle.save()
+
+                # Descuento condicional: solo resta si todavía alcanza el stock
+                filas = (Producto
+                         .update(stock_disponible=Producto.stock_disponible - detalle.cantidad)
+                         .where((Producto.id_producto == detalle.id_producto) &
+                                (Producto.stock_disponible >= detalle.cantidad))
+                         .execute())
+                if filas == 0:
+                    raise StockInsuficiente(detalle.id_producto)
         print(f'Pedido guardado con éxito con Id: {pedido.id_pedido}.')
+    except StockInsuficiente as e:
+        print(f'Stock insuficiente para el producto Id {e}. Pedido NO guardado.')
     except IntegrityError as e:
         print(f"Error de clave única o clave foránea: {e}")
     except OperationalError as e:
