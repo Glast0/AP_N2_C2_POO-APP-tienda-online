@@ -1,11 +1,5 @@
-from peewee import Model, AutoField, CharField, IntegerField
-from datos.conexion import conectar_db
-
-database = conectar_db()
-
-class BaseModel(Model):
-    class Meta:
-        database = database
+from peewee import AutoField, CharField, IntegerField
+from datos.modelos.base import BaseModel
 
 class Categoria(BaseModel):
     id_categoria = AutoField()

@@ -1,11 +1,5 @@
-from peewee import Model, AutoField, CharField, IntegerField, DecimalField, DateTimeField
-from datos.conexion import conectar_db
-
-database = conectar_db()
-
-class BaseModel(Model):
-    class Meta:
-        database = database
+from peewee import AutoField, CharField, IntegerField, DecimalField, DateTimeField
+from datos.modelos.base import BaseModel
 
 class Pago(BaseModel):
     id_pago = AutoField()

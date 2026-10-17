@@ -1,4 +1,5 @@
-from datos.modelos.pedido import Pedido, DetallePedido, database
+from datos.modelos.base import database
+from datos.modelos.pedido import Pedido, DetallePedido
 from peewee import IntegrityError, OperationalError, DataError, PeeweeException
 
 def listado_pedidos():
