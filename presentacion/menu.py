@@ -14,7 +14,7 @@ from presentacion.presentacion_clientes import ( solicitar_datos_cliente, solici
 
 from auxiliares import menu_productos
 from negocio.negocio_productos import lista_productos
-from presentacion.presentacion_productos import solicitar_datos_producto, solicitar_modificacion_producto
+from presentacion.presentacion_productos import solicitar_datos_producto, solicitar_modificacion_producto, solicitar_eliminacion_producto
 
 from auxiliares import menu_direcciones
 from negocio.negocio_direccion import lista_direcciones
@@ -96,7 +96,7 @@ def menu_principal():
             for numero, nombre in menu_productos.items():
                 print(f'[{numero}] - {nombre}')
 
-            opcion_sub_menu = input('\nIngrese su opción [0-3]: ')
+            opcion_sub_menu = input('\nIngrese su opción [0-4]: ')
             if opcion_sub_menu == '1':
                 lista_productos()
 
@@ -105,6 +105,9 @@ def menu_principal():
                 
             elif opcion_sub_menu == '3':
                 solicitar_modificacion_producto()
+
+            elif opcion_sub_menu == '4':
+                solicitar_eliminacion_producto()
 
         #----------------------------------  DIRECCIONES  ----------------------------------
         elif opcion_usuario == '5':

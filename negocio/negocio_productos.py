@@ -1,5 +1,5 @@
 from datos.repositorios.repositorio_productos import (
-    listado_productos, guardar_producto, buscar_producto, actualizar_producto)
+    listado_productos, guardar_producto, buscar_producto, actualizar_producto, deshabilitar_producto)
 from datos.repositorios.repositorio_categorias import buscar_categoria
 from prettytable import PrettyTable
 from datos.modelos.producto import Producto
@@ -88,3 +88,14 @@ def modificar_producto(id_producto, nombre_producto, descripcion, precio, stock,
     producto.stock_disponible = stock
     producto.id_categoria = id_categoria
     actualizar_producto(producto)
+
+def eliminar_producto(id_producto):
+    producto = buscar_producto(id_producto)
+    if producto is None:
+        print(f'El producto con Id {id_producto} no existe. Producto NO eliminado.')
+        return
+    if producto.habilitado == 0:
+        print('El producto ya está deshabilitado. Nada que hacer.')
+        return
+
+    deshabilitar_producto(producto)

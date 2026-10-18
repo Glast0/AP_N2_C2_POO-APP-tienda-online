@@ -39,3 +39,17 @@ def actualizar_producto(producto: Producto):
 def productos_habilitados_de_categoria(id_categoria: int):
     return Producto.select().where(
         (Producto.id_categoria == id_categoria) & (Producto.habilitado == 1))
+
+def deshabilitar_producto(producto: Producto):
+    try:
+        producto.habilitado = 0
+        producto.save()
+        print(f'Producto {producto.id_producto} eliminado con éxito.')
+    except IntegrityError as e:
+        print(f"Error de clave única o clave foránea: {e}")
+    except OperationalError as e:
+        print(f"Error operacional (conexión perdida, tabla inexistente o BD bloqueada): {e}")
+    except DataError as e:
+        print(f"El valor ingresado NO corresponde: {e}")
+    except PeeweeException as e:
+        print(f"No se pudo eliminar por un error genérico: {e}")
