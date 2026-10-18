@@ -1,5 +1,7 @@
 from datos.repositorios.repositorio_categorias import (
-    listado_categorias, guardar_categoria, buscar_categoria, actualizar_categoria)
+    listado_categorias, guardar_categoria, buscar_categoria, actualizar_categoria,
+    deshabilitar_categoria)
+from datos.repositorios.repositorio_productos import productos_habilitados_de_categoria
 from prettytable import PrettyTable
 from datos.modelos.categoria import Categoria
 
@@ -39,3 +41,19 @@ def modificar_categoria(id_categoria, nombre, descripcion):
     categoria.nombre_categoria = nombre
     categoria.descripcion = descripcion
     actualizar_categoria(categoria)
+
+
+def eliminar_categoria(id_categoria):
+    categoria = buscar_categoria(id_categoria)
+    if categoria is None:
+        print(f'La categoría con Id {id_categoria} no existe. Categoría NO eliminada.')
+        return
+    if categoria.habilitado == 0:
+        print('La categoría ya está deshabilitada. Nada que hacer.')
+        return
+    if productos_habilitados_de_categoria(id_categoria).count() > 0:
+        print('La categoría tiene productos habilitados. Deshabilítelos o muévalos '
+              'a otra categoría primero. Categoría NO eliminada.')
+        return
+
+    deshabilitar_categoria(categoria)

@@ -35,3 +35,7 @@ def actualizar_producto(producto: Producto):
         print(f"El valor ingresado NO corresponde: {e}")
     except PeeweeException as e:
         print(f"No se pudieron actualizar los datos por un error genérico: {e}")
+
+def productos_habilitados_de_categoria(id_categoria: int):
+    return Producto.select().where(
+        (Producto.id_categoria == id_categoria) & (Producto.habilitado == 1))

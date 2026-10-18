@@ -23,6 +23,7 @@ menu_categorias = {
     '1': 'Listar categorías',
     '2': 'Crear categoría',
     '3': 'Modificar categoría',
+    '4': 'Eliminar categoría',
 }
 
 menu_clientes = {

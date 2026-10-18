@@ -35,3 +35,17 @@ def actualizar_categoria(categoria: Categoria):
         print(f"El valor ingresado NO corresponde: {e}")
     except PeeweeException as e:
         print(f"No se pudieron actualizar los datos por un error genérico: {e}")
+
+def deshabilitar_categoria(categoria: Categoria):
+    try:
+        categoria.habilitado = 0
+        categoria.save()
+        print(f'Categoría {categoria.id_categoria} eliminada con éxito.')
+    except IntegrityError as e:
+        print(f"Error de clave única o clave foránea: {e}")
+    except OperationalError as e:
+        print(f"Error operacional (conexión perdida, tabla inexistente o BD bloqueada): {e}")
+    except DataError as e:
+        print(f"El valor ingresado NO corresponde: {e}")
+    except PeeweeException as e:
+        print(f"No se pudo eliminar por un error genérico: {e}")

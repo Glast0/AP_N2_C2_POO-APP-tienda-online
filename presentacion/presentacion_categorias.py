@@ -1,4 +1,6 @@
-from negocio.negocio_categoria import crear_categoria, lista_categorias, obtener_categoria, modificar_categoria
+from negocio.negocio_categoria import (
+    crear_categoria, lista_categorias, obtener_categoria, modificar_categoria,
+    eliminar_categoria)
 from presentacion.presentacion_pedidos import pedir_entero
 
 def solicitar_datos_categoria():
@@ -40,3 +42,24 @@ def solicitar_modificacion_categoria():
         descripcion = None
 
     modificar_categoria(categoria.id_categoria, nombre, descripcion)
+
+def solicitar_eliminacion_categoria():
+    print('\nCategorías disponibles:')
+    lista_categorias()
+
+    categoria = None
+    while categoria is None:
+        id_categoria = pedir_entero('Ingrese el Id de la categoría a eliminar (0 para cancelar): ')
+        if id_categoria == 0:
+            print('Eliminación cancelada.')
+            return
+        categoria = obtener_categoria(id_categoria)
+        if categoria is None:
+            print(f'La categoría con Id {id_categoria} no existe. Intente nuevamente.')
+
+    confirmar = input(f'¿Eliminar la categoría "{categoria.nombre_categoria}"? [s/n]: ').strip().lower()
+    if confirmar != 's':
+        print('Eliminación cancelada.')
+        return
+
+    eliminar_categoria(categoria.id_categoria)
