@@ -31,6 +31,7 @@ menu_clientes = {
     '1': 'Listar clientes',
     '2': 'Crear cliente',
     '3': 'Modificar Cliente',
+    '4': 'Eliminar cliente',
 }
 
 menu_productos = {

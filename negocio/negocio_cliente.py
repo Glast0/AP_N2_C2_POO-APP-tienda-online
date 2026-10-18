@@ -1,6 +1,7 @@
 from datos.repositorios.repositorio_clientes import (
     listado_clientes, guardar_cliente, buscar_cliente, buscar_cliente_por_rut,
-    buscar_cliente_por_email, actualizar_cliente)
+    buscar_cliente_por_email, actualizar_cliente, deshabilitar_cliente)
+from datos.repositorios.repositorio_pedidos import pedidos_en_curso_de_cliente
 from prettytable import PrettyTable
 from datos.modelos.cliente import Cliente
 from auxiliares.validaciones import rut_valido
@@ -70,3 +71,18 @@ def modificar_cliente(id_cliente, nombre, rut, email, telefono):
     cliente.email = email
     cliente.telefono = telefono
     actualizar_cliente(cliente)
+
+def eliminar_cliente(id_cliente):
+    cliente = buscar_cliente(id_cliente)
+    if cliente is None:
+        print(f'El cliente con Id {id_cliente} no existe. Cliente NO eliminado.')
+        return
+    if cliente.habilitado == 0:
+        print('El cliente ya está deshabilitado. Nada que hacer.')
+        return
+    if pedidos_en_curso_de_cliente(id_cliente).count() > 0:
+        print('El cliente tiene pedidos en curso. Espere a que terminen o cancélelos. '
+              'Cliente NO eliminado.')
+        return
+
+    deshabilitar_cliente(cliente)

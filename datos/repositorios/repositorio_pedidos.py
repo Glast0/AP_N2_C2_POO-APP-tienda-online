@@ -44,3 +44,7 @@ def guardar_pedido(pedido: Pedido, detalles: list):
         print(f"El valor ingresado NO corresponde: {e}")
     except PeeweeException as e:
         print(f"No se pudieron guardar los datos por un error genérico: {e}")
+
+def pedidos_en_curso_de_cliente(id_cliente: int):
+    return Pedido.select().where(
+        (Pedido.id_cliente == id_cliente) & (Pedido.id_estado_pedido.in_([1, 2, 3, 4])))
