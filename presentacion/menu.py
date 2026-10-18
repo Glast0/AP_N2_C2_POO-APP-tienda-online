@@ -24,7 +24,7 @@ from presentacion.presentacion_pedidos import solicitar_datos_pedido, solicitar_
 
 from auxiliares import menu_pagos
 from negocio.negocio_pago import lista_pagos
-from presentacion.presentacion_pagos import solicitar_datos_pago
+from presentacion.presentacion_pagos import solicitar_datos_pago, solicitar_aprobacion_pago
 
 from auxiliares import menu_envios
 from negocio.negocio_envio import lista_envios
@@ -131,11 +131,16 @@ def menu_principal():
             for numero, nombre in menu_pagos.items():
                 print(f'[{numero}] - {nombre}')
 
-            opcion_sub_menu = input('\nIngrese su opción [0-2]: ')
+            opcion_sub_menu = input('\nIngrese su opción [0-3]: ')
+            
             if opcion_sub_menu == '1':
                 lista_pagos()
+
             elif opcion_sub_menu == '2':
                 solicitar_datos_pago()
+
+            elif opcion_sub_menu == '3':
+                solicitar_aprobacion_pago()
 
         #----------------------------------  ENVIOS  ----------------------------------
         elif opcion_usuario == '8':

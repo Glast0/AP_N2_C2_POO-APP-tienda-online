@@ -57,6 +57,7 @@ menu_pagos = {
     '0': 'Volver',
     '1': 'Listar pagos',
     '2': 'Registrar pago',
+    '3': 'Aprobar pago',
 }
 
 menu_envios = {
