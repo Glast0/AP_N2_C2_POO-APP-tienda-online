@@ -1,5 +1,5 @@
 from datos.repositorios.repositorio_direcciones import (
-    listado_direcciones, guardar_direccion, buscar_direccion, actualizar_direccion)
+    listado_direcciones, guardar_direccion, buscar_direccion, actualizar_direccion, direcciones_de_cliente)
 from datos.repositorios.repositorio_clientes import buscar_cliente
 from prettytable import PrettyTable
 from datos.modelos.direccion_entrega import DireccionEntrega
@@ -50,3 +50,21 @@ def modificar_direccion(id_direccion, calle, numero, comuna, ciudad):
     direccion.comuna = comuna
     direccion.ciudad = ciudad
     actualizar_direccion(direccion)
+
+def lista_direcciones_de_cliente(id_cliente):
+    """Muestra las direcciones del cliente. Devuelve False si no tiene ninguna."""
+    direcciones = list(direcciones_de_cliente(id_cliente))
+    if not direcciones:
+        return False
+
+    tabla = PrettyTable()
+    tabla.field_names = ['Id', 'Calle', 'Número', 'Comuna', 'Ciudad', 'Habilitado']
+    for d in direcciones:
+        tabla.add_row([d.id_direccion_entrega, d.calle, d.numero, d.comuna,
+                       d.ciudad, ('Deshabilitado', 'Habilitado')[d.habilitado]])
+    print(tabla)
+    return True
+
+def direccion_es_del_cliente(id_direccion, id_cliente):
+    direccion = buscar_direccion(id_direccion)
+    return direccion is not None and direccion.id_cliente == id_cliente

@@ -2,6 +2,7 @@ from datos.modelos.base import database
 from datos.modelos.pago import Pago
 from datos.modelos.pedido import Pedido, DetallePedido
 from datos.modelos.producto import Producto
+from datos.modelos.carritos import ItemCarrito
 from peewee import IntegrityError, OperationalError, DataError, PeeweeException
 
 class StockInsuficiente(Exception):
@@ -18,7 +19,7 @@ def listado_detalle(id_pedido: int):
 def buscar_pedido(id_pedido: int):
     return Pedido.get_or_none(Pedido.id_pedido == id_pedido)
 
-def guardar_pedido(pedido: Pedido, detalles: list):
+def guardar_pedido(pedido: Pedido, detalles: list, ids_items_carrito=None):
     try:
         with database.atomic():
             pedido.save()
@@ -26,7 +27,6 @@ def guardar_pedido(pedido: Pedido, detalles: list):
                 detalle.id_pedido = pedido.id_pedido
                 detalle.save()
 
-                # Descuento condicional: solo resta si todavía alcanza el stock
                 filas = (Producto
                          .update(stock_disponible=Producto.stock_disponible - detalle.cantidad)
                          .where((Producto.id_producto == detalle.id_producto) &
@@ -34,7 +34,16 @@ def guardar_pedido(pedido: Pedido, detalles: list):
                          .execute())
                 if filas == 0:
                     raise StockInsuficiente(detalle.id_producto)
+
+            # Si viene de un carrito, se sacan de ahí los ítems comprados (borrado real)
+            if ids_items_carrito:
+                (ItemCarrito
+                 .delete()
+                 .where(ItemCarrito.id_item_carrito.in_(ids_items_carrito))
+                 .execute())
         print(f'Pedido guardado con éxito con Id: {pedido.id_pedido}.')
+        if ids_items_carrito:
+            print('Los productos comprados salieron del carrito.')
     except StockInsuficiente as e:
         print(f'Stock insuficiente para el producto Id {e}. Pedido NO guardado.')
     except IntegrityError as e:

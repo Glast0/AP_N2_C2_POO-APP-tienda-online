@@ -35,3 +35,6 @@ def actualizar_direccion(direccion: DireccionEntrega):
         print(f"El valor ingresado NO corresponde: {e}")
     except PeeweeException as e:
         print(f"No se pudieron actualizar los datos por un error genérico: {e}")
+
+def direcciones_de_cliente(id_cliente: int):
+    return DireccionEntrega.select().where(DireccionEntrega.id_cliente == id_cliente)

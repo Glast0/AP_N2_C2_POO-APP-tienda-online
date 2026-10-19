@@ -6,6 +6,7 @@ from datos.repositorios.repositorio_carritos import (
 from datos.repositorios.repositorio_clientes import buscar_cliente
 from datos.repositorios.repositorio_productos import buscar_producto
 from datos.modelos.carritos import Carrito, ItemCarrito
+from negocio.negocio_pedido import crear_pedido
 
 def lista_carritos():
     tabla = PrettyTable()
@@ -105,3 +106,23 @@ def modificar_cantidad_item(id_carrito, id_item, cantidad):
 
     item.cantidad = cantidad
     actualizar_item(item)
+
+def carrito_tiene_items(id_carrito):
+    return listado_items(id_carrito).count() > 0
+
+def comprar_carrito(id_carrito, id_direccion):
+    carrito = buscar_carrito(id_carrito)
+    if carrito is None:
+        print(f'El carrito con Id {id_carrito} no existe. Compra NO realizada.')
+        return
+
+    items = list(listado_items(id_carrito))
+    if not items:
+        print('El carrito está vacío. Compra NO realizada.')
+        return
+
+    lista_items = [(i.id_producto, i.cantidad) for i in items]
+    ids_items = [i.id_item_carrito for i in items]
+
+    # crear_pedido aplica todas las reglas: cliente, dirección, stock y precio actual
+    crear_pedido(carrito.id_cliente, id_direccion, lista_items, ids_items)

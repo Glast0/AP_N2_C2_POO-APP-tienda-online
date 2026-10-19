@@ -1,7 +1,8 @@
-from negocio.negocio_carritos import crear_carrito, agregar_item, items_carrito, lista_carritos, obtener_carrito, obtener_item, modificar_cantidad_item
+from negocio.negocio_carritos import crear_carrito, agregar_item, items_carrito, lista_carritos, obtener_carrito, obtener_item, modificar_cantidad_item, carrito_tiene_items, comprar_carrito
 from negocio.negocio_cliente import lista_clientes
 from negocio.negocio_productos import lista_productos
 from presentacion.presentacion_pedidos import pedir_entero
+from negocio.negocio_direccion import lista_direcciones_de_cliente, direccion_es_del_cliente
 
 def solicitar_datos_carrito():
     print('\nClientes disponibles:')
@@ -56,3 +57,48 @@ def solicitar_cambio_cantidad_item():
     print(f'Cantidad actual: {item.cantidad}')
     cantidad = pedir_entero('Nueva cantidad: ')
     modificar_cantidad_item(carrito.id_carrito, item.id_item_carrito, cantidad)
+
+def solicitar_compra_carrito():
+    print('\nCarritos disponibles:')
+    lista_carritos()
+
+    carrito = None
+    while carrito is None:
+        id_carrito = pedir_entero('Ingrese el Id del carrito a comprar (0 para cancelar): ')
+        if id_carrito == 0:
+            print('Compra cancelada.')
+            return
+        carrito = obtener_carrito(id_carrito)
+        if carrito is None:
+            print(f'El carrito con Id {id_carrito} no existe. Intente nuevamente.')
+
+    if not carrito_tiene_items(carrito.id_carrito):
+        print('El carrito está vacío. Agrega productos primero (opción 3 del menú Carritos).')
+        return
+
+    print()
+    items_carrito(carrito.id_carrito)
+    print('(Los precios del carrito son referenciales: el pedido usará el precio actual.)')
+
+    print(f'\nDirecciones del cliente {carrito.id_cliente}:')
+    if not lista_direcciones_de_cliente(carrito.id_cliente):
+        print('Ese cliente no tiene direcciones. Registra una en el menú Direcciones de entrega.')
+        return
+
+    id_direccion = None
+    while id_direccion is None:
+        candidato = pedir_entero('Ingrese el Id de la dirección de entrega (0 para cancelar): ')
+        if candidato == 0:
+            print('Compra cancelada.')
+            return
+        if direccion_es_del_cliente(candidato, carrito.id_cliente):
+            id_direccion = candidato
+        else:
+            print('Esa dirección no existe o no pertenece al cliente. Intente nuevamente.')
+
+    confirmar = input('¿Comprar el carrito? Se creará el pedido y se vaciará el carrito. [s/n]: ')
+    if confirmar.strip().lower() != 's':
+        print('Compra cancelada.')
+        return
+
+    comprar_carrito(carrito.id_carrito, id_direccion)

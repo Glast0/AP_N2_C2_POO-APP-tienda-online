@@ -35,7 +35,7 @@ def detalle_pedido(id_pedido):
                        d.precio_unitario, d.cantidad * d.precio_unitario])
     print(tabla)
 
-def crear_pedido(id_cliente, id_direccion, items):
+def crear_pedido(id_cliente, id_direccion, items, ids_items_carrito=None):
     """items es una lista de tuplas (id_producto, cantidad)."""
     # Reglas de negocio
     if buscar_cliente(id_cliente) is None:
@@ -86,7 +86,7 @@ def crear_pedido(id_cliente, id_direccion, items):
     pedido.total = total
     pedido.id_cliente = id_cliente
     pedido.id_direccion_entrega = id_direccion
-    guardar_pedido(pedido, detalles)
+    guardar_pedido(pedido, detalles, ids_items_carrito)
 
 # Avance manual permitido: estado actual -> estado siguiente
 TRANSICIONES = {2: 3, 3: 4}  # CONFIRMADO -> EN_PREPARACION -> ENVIADO
