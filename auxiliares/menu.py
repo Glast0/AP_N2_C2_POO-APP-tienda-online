@@ -60,6 +60,7 @@ menu_pagos = {
     '1': 'Listar pagos',
     '2': 'Registrar pago',
     '3': 'Aprobar pago',
+    '4': 'Rechazar pago',
 }
 
 menu_envios = {
@@ -74,4 +75,5 @@ menu_carritos = {
     '2': 'Crear carrito',
     '3': 'Agregar producto a un carrito',
     '4': 'Ver productos de un carrito',
+    '5': 'Cambiar cantidad de un producto',
 }

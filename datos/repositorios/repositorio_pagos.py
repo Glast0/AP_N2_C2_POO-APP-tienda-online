@@ -70,3 +70,19 @@ def aprobar_pago_en_bd(id_pago: int, id_pedido: int):
         print(f"El valor ingresado NO corresponde: {e}")
     except PeeweeException as e:
         print(f"No se pudieron actualizar los datos por un error genérico: {e}")
+
+def rechazar_pago_en_bd(id_pago: int):
+    try:
+        filas = (Pago
+                 .update(id_estado_pago=3)
+                 .where((Pago.id_pago == id_pago) & (Pago.id_estado_pago == 1))
+                 .execute())
+        if filas == 0:
+            raise PagoNoPendiente()
+        print(f'Pago {id_pago} rechazado.')
+    except PagoNoPendiente:
+        print('El pago ya no está PENDIENTE. Pago NO modificado.')
+    except OperationalError as e:
+        print(f"Error operacional (conexión perdida, tabla inexistente o BD bloqueada): {e}")
+    except PeeweeException as e:
+        print(f"No se pudieron actualizar los datos por un error genérico: {e}")

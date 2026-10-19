@@ -24,16 +24,16 @@ from presentacion.presentacion_pedidos import solicitar_datos_pedido, solicitar_
 
 from auxiliares import menu_pagos
 from negocio.negocio_pago import lista_pagos
-from presentacion.presentacion_pagos import solicitar_datos_pago, solicitar_aprobacion_pago
+from presentacion.presentacion_pagos import solicitar_datos_pago, solicitar_aprobacion_pago, solicitar_rechazo_pago
 
 from auxiliares import menu_envios
 from negocio.negocio_envio import lista_envios
-from presentacion.presentacion_envios import solicitar_datos_envio
+from presentacion.presentacion_envios import solicitar_datos_envio, solicitar_entrega_envio
 
 from auxiliares import menu_carritos
 from negocio.negocio_carritos import lista_carritos
 from presentacion.presentacion_carritos import (
-    solicitar_datos_carrito, solicitar_datos_item, solicitar_items_carrito)
+    solicitar_datos_carrito, solicitar_datos_item, solicitar_items_carrito, solicitar_cambio_cantidad_item)
 
 def menu_principal():
     print(f'\n{nombre_aplicacion} - {version_aplicacion}')
@@ -139,7 +139,7 @@ def menu_principal():
             for numero, nombre in menu_pagos.items():
                 print(f'[{numero}] - {nombre}')
 
-            opcion_sub_menu = input('\nIngrese su opción [0-3]: ')
+            opcion_sub_menu = input('\nIngrese su opción [0-4]: ')
             
             if opcion_sub_menu == '1':
                 lista_pagos()
@@ -150,31 +150,45 @@ def menu_principal():
             elif opcion_sub_menu == '3':
                 solicitar_aprobacion_pago()
 
+            elif opcion_sub_menu == '4':
+                solicitar_rechazo_pago()
+
         #----------------------------------  ENVIOS  ----------------------------------
         elif opcion_usuario == '8':
             for numero, nombre in menu_envios.items():
                 print(f'[{numero}] - {nombre}')
         
-            opcion_sub_menu = input('\nIngrese su opción [0-2]: ')
+            opcion_sub_menu = input('\nIngrese su opción [0-3]: ')
+
             if opcion_sub_menu == '1':
                 lista_envios()
+
             elif opcion_sub_menu == '2':
                 solicitar_datos_envio()
+
+            elif opcion_sub_menu == '3':
+                solicitar_entrega_envio()
 
         #----------------------------------  CARRITOS  ----------------------------------
         elif opcion_usuario == '9':
             for numero, nombre in menu_carritos.items():
                 print(f'[{numero}] - {nombre}')
         
-            opcion_sub_menu = input('\nIngrese su opción [0-4]: ')
+            opcion_sub_menu = input('\nIngrese su opción [0-5]: ')
             if opcion_sub_menu == '1':
                 lista_carritos()
+
             elif opcion_sub_menu == '2':
                 solicitar_datos_carrito()
+
             elif opcion_sub_menu == '3':
                 solicitar_datos_item()
+
             elif opcion_sub_menu == '4':
                 solicitar_items_carrito()
+
+            elif opcion_sub_menu == '5':
+                solicitar_cambio_cantidad_item()
 
         elif opcion_usuario == '0':
             print('Saliendo...')

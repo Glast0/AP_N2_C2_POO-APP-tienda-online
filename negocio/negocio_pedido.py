@@ -7,6 +7,7 @@ from datos.repositorios.repositorio_clientes import buscar_cliente
 from datos.repositorios.repositorio_direcciones import buscar_direccion
 from datos.repositorios.repositorio_productos import buscar_producto
 from datos.modelos.pedido import Pedido, DetallePedido
+from datos.repositorios.repositorio_envios import buscar_envio_de_pedido
 
 ESTADOS = {1: 'CREADO', 2: 'CONFIRMADO', 3: 'EN_PREPARACION',
            4: 'ENVIADO', 5: 'ENTREGADO', 6: 'CANCELADO'}
@@ -88,7 +89,7 @@ def crear_pedido(id_cliente, id_direccion, items):
     guardar_pedido(pedido, detalles)
 
 # Avance manual permitido: estado actual -> estado siguiente
-TRANSICIONES = {2: 3, 3: 4, 4: 5}  # CONFIRMADO -> EN_PREPARACION -> ENVIADO -> ENTREGADO
+TRANSICIONES = {2: 3, 3: 4}  # CONFIRMADO -> EN_PREPARACION -> ENVIADO
 ESTADOS_CANCELABLES = (1, 2, 3)    # CREADO, CONFIRMADO, EN_PREPARACION
 
 def obtener_pedido(id_pedido):
@@ -105,9 +106,17 @@ def avanzar_estado_pedido(id_pedido):
         print('El pedido está CREADO: pasa a CONFIRMADO solo cuando sus pagos '
               'aprobados cubren el total. Pedido NO modificado.')
         return
+    if actual == 4:
+        print('El pedido está ENVIADO: pasa a ENTREGADO al registrar la entrega real '
+              'de su envío (menú Envíos). Pedido NO modificado.')
+        return
     if actual not in TRANSICIONES:
         print(f'El pedido está {ESTADOS.get(actual, actual)} y no puede avanzar más. '
               'Pedido NO modificado.')
+        return
+    if actual == 3 and buscar_envio_de_pedido(id_pedido) is None:
+        print('Para pasar a ENVIADO el pedido necesita un envío registrado '
+              '(menú Envíos). Pedido NO modificado.')
         return
 
     cambiar_estado_pedido_en_bd(id_pedido, actual, TRANSICIONES[actual])

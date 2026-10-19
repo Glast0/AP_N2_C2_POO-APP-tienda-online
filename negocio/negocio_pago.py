@@ -2,7 +2,7 @@ from datetime import datetime
 from decimal import Decimal
 from prettytable import PrettyTable
 from datos.repositorios.repositorio_pagos import (
-    listado_pagos, pagos_de_pedido, guardar_pago, buscar_pago, aprobar_pago_en_bd)
+    listado_pagos, pagos_de_pedido, guardar_pago, buscar_pago, aprobar_pago_en_bd, rechazar_pago_en_bd)
 from datos.repositorios.repositorio_pedidos import buscar_pedido
 from datos.modelos.pago import Pago
 
@@ -74,3 +74,14 @@ def aprobar_pago(id_pago):
         return
 
     aprobar_pago_en_bd(id_pago, pago.id_pedido)
+
+def rechazar_pago(id_pago):
+    pago = buscar_pago(id_pago)
+    if pago is None:
+        print(f'El pago con Id {id_pago} no existe. Pago NO modificado.')
+        return
+    if pago.id_estado_pago != 1:
+        estado = ESTADOS_PAGO.get(pago.id_estado_pago, pago.id_estado_pago)
+        print(f'El pago está {estado}; solo se pueden rechazar pagos PENDIENTES. Pago NO modificado.')
+        return
+    rechazar_pago_en_bd(id_pago)

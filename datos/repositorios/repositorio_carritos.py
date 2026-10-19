@@ -46,3 +46,19 @@ def guardar_item(item: ItemCarrito):
         print(f"El valor ingresado NO corresponde: {e}")
     except PeeweeException as e:
         print(f"No se pudieron guardar los datos por un error genérico: {e}")
+
+def buscar_item(id_item: int):
+    return ItemCarrito.get_or_none(ItemCarrito.id_item_carrito == id_item)
+
+def actualizar_item(item: ItemCarrito):
+    try:
+        item.save()
+        print(f'Ítem {item.id_item_carrito} actualizado con éxito.')
+    except IntegrityError as e:
+        print(f"Error de clave única o clave foránea: {e}")
+    except OperationalError as e:
+        print(f"Error operacional (conexión perdida, tabla inexistente o BD bloqueada): {e}")
+    except DataError as e:
+        print(f"El valor ingresado NO corresponde: {e}")
+    except PeeweeException as e:
+        print(f"No se pudieron actualizar los datos por un error genérico: {e}")

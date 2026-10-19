@@ -2,7 +2,7 @@ from datetime import date
 from prettytable import PrettyTable
 from datos.repositorios.repositorio_carritos import (
     listado_carritos, buscar_carrito, buscar_carrito_de_cliente, listado_items,
-    buscar_item_en_carrito, guardar_carrito, guardar_item)
+    buscar_item_en_carrito, guardar_carrito, guardar_item, buscar_item, actualizar_item)
 from datos.repositorios.repositorio_clientes import buscar_cliente
 from datos.repositorios.repositorio_productos import buscar_producto
 from datos.modelos.carritos import Carrito, ItemCarrito
@@ -75,3 +75,33 @@ def agregar_item(id_carrito, id_producto, cantidad):
     nuevo.cantidad = cantidad
     nuevo.precio_unitario = producto.precio  # precio del momento
     guardar_item(nuevo)
+
+def obtener_carrito(id_carrito):
+    return buscar_carrito(id_carrito)
+
+def obtener_item(id_item):
+    return buscar_item(id_item)
+
+def modificar_cantidad_item(id_carrito, id_item, cantidad):
+    item = buscar_item(id_item)
+    if item is None or item.id_carrito != id_carrito:
+        print(f'El ítem {id_item} no existe en el carrito {id_carrito}. Cambios NO guardados.')
+        return
+    if cantidad <= 0:
+        print('La cantidad debe ser mayor a 0. Cambios NO guardados.')
+        return
+
+    producto = buscar_producto(item.id_producto)
+    if producto is None:
+        print('El producto de este ítem ya no existe. Cambios NO guardados.')
+        return
+    if cantidad > producto.stock_disponible:
+        print(f'Stock insuficiente para "{producto.nombre_producto}" '
+              f'(disponible: {producto.stock_disponible}). Cambios NO guardados.')
+        return
+    if cantidad == item.cantidad:
+        print('No hubo cambios. Nada que actualizar.')
+        return
+
+    item.cantidad = cantidad
+    actualizar_item(item)

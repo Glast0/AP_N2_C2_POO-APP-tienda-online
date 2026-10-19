@@ -1,7 +1,7 @@
 from datetime import date
 from prettytable import PrettyTable
 from datos.repositorios.repositorio_envios import (
-    listado_envios, buscar_envio_de_pedido, guardar_envio)
+    listado_envios, buscar_envio_de_pedido, guardar_envio, buscar_envio, registrar_entrega_en_bd)
 from datos.repositorios.repositorio_pedidos import buscar_pedido
 from datos.modelos.envio import Envio
 
@@ -40,3 +40,28 @@ def crear_envio(id_pedido, transportista, numero_seguimiento, fecha_estimada):
     nuevo.fecha_despacho = date.today()
     nuevo.fecha_entrega_estimada = fecha_estimada
     guardar_envio(nuevo)
+
+def obtener_envio(id_envio):
+    return buscar_envio(id_envio)
+
+def registrar_entrega(id_envio, fecha_real):
+    envio = buscar_envio(id_envio)
+    if envio is None:
+        print(f'El envío con Id {id_envio} no existe. Entrega NO registrada.')
+        return
+    if envio.fecha_entrega_real is not None:
+        print('Este envío ya tiene una entrega registrada. Entrega NO registrada.')
+        return
+
+    pedido = buscar_pedido(envio.id_pedido)
+    if pedido is None or pedido.id_estado_pedido != 4:
+        print('El pedido debe estar ENVIADO para registrar su entrega. Entrega NO registrada.')
+        return
+    if fecha_real > date.today():
+        print('La fecha de entrega real no puede ser futura. Entrega NO registrada.')
+        return
+    if envio.fecha_despacho is not None and fecha_real < envio.fecha_despacho:
+        print('La entrega no puede ser anterior al despacho. Entrega NO registrada.')
+        return
+
+    registrar_entrega_en_bd(id_envio, envio.id_pedido, fecha_real)
