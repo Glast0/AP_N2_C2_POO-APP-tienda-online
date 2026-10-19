@@ -20,7 +20,7 @@ from presentacion.presentacion_direcciones import solicitar_datos_direccion, sol
 
 from auxiliares import menu_pedidos
 from negocio.negocio_pedido import lista_pedidos
-from presentacion.presentacion_pedidos import solicitar_datos_pedido, solicitar_detalle_pedido
+from presentacion.presentacion_pedidos import solicitar_datos_pedido, solicitar_detalle_pedido, solicitar_avance_estado_pedido, solicitar_cancelacion_pedido
 
 from auxiliares import menu_pagos
 from negocio.negocio_pago import lista_pagos
@@ -118,13 +118,21 @@ def menu_principal():
             for numero, nombre in menu_pedidos.items():
                 print(f'[{numero}] - {nombre}')
 
-            opcion_sub_menu = input('\nIngrese su opción [0-3]: ')
+            opcion_sub_menu = input('\nIngrese su opción [0-5]: ')
             if opcion_sub_menu == '1':
                 lista_pedidos()
+                
             elif opcion_sub_menu == '2':
                 solicitar_datos_pedido()
+
             elif opcion_sub_menu == '3':
                 solicitar_detalle_pedido()
+
+            elif opcion_sub_menu == '4':
+                solicitar_avance_estado_pedido()
+
+            elif opcion_sub_menu == '5':
+                solicitar_cancelacion_pedido()
 
         #----------------------------------  PAGOS  ----------------------------------
         elif opcion_usuario == '7':

@@ -51,6 +51,8 @@ menu_pedidos = {
     '1': 'Listar pedidos',
     '2': 'Crear pedido',
     '3': 'Ver detalle de un pedido',
+    '4': 'Avanzar estado de un pedido',
+    '5': 'Cancelar pedido',
 }
 
 menu_pagos = {
