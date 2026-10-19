@@ -47,6 +47,7 @@ menu_direcciones = {
     '1': 'Listar direcciones',
     '2': 'Crear dirección',
     '3': 'Modificar dirección',
+    '4': 'Eliminar direccion',
 }
 
 menu_pedidos = {

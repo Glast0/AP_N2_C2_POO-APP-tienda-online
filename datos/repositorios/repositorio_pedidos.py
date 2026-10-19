@@ -48,3 +48,7 @@ def guardar_pedido(pedido: Pedido, detalles: list):
 def pedidos_en_curso_de_cliente(id_cliente: int):
     return Pedido.select().where(
         (Pedido.id_cliente == id_cliente) & (Pedido.id_estado_pedido.in_([1, 2, 3, 4])))
+
+def pedidos_en_curso_de_direccion(id_direccion: int):
+    return Pedido.select().where(
+        (Pedido.id_direccion_entrega == id_direccion) & (Pedido.id_estado_pedido.in_([1, 2, 3, 4])))

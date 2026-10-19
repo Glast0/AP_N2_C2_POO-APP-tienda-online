@@ -18,7 +18,7 @@ from presentacion.presentacion_productos import solicitar_datos_producto, solici
 
 from auxiliares import menu_direcciones
 from negocio.negocio_direccion import lista_direcciones
-from presentacion.presentacion_direcciones import solicitar_datos_direccion, solicitar_modificacion_direccion
+from presentacion.presentacion_direcciones import solicitar_datos_direccion, solicitar_modificacion_direccion, solicitar_eliminacion_direccion
 
 from auxiliares import menu_pedidos
 from negocio.negocio_pedido import lista_pedidos
@@ -39,7 +39,7 @@ from presentacion.presentacion_carritos import (
 
 def menu_principal():
     print(f'\n{nombre_aplicacion} - {version_aplicacion}')
-    print(f'{'=' * len(nombre_aplicacion)}==={'=' * len(version_aplicacion)}\n')
+    
 
     while True:
         for clave,valor in menu_superior.items():
@@ -114,7 +114,7 @@ def menu_principal():
             for numero, nombre in menu_direcciones.items():
                 print(f'[{numero}] - {nombre}')
 
-            opcion_sub_menu = input('\nIngrese su opción [0-3]: ')
+            opcion_sub_menu = input('\nIngrese su opción [0-4]: ')
             if opcion_sub_menu == '1':
                 lista_direcciones()
 
@@ -123,6 +123,9 @@ def menu_principal():
 
             elif opcion_sub_menu == '3':
                 solicitar_modificacion_direccion()
+
+            elif opcion_sub_menu == '4':
+                solicitar_eliminacion_direccion()
 
         #----------------------------------  PEDIDOS  ----------------------------------
         elif opcion_usuario == '6':

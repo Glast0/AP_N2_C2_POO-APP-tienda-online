@@ -35,3 +35,17 @@ def actualizar_direccion(direccion: DireccionEntrega):
         print(f"El valor ingresado NO corresponde: {e}")
     except PeeweeException as e:
         print(f"No se pudieron actualizar los datos por un error genérico: {e}")
+
+def deshabilitar_direccion(direccion: DireccionEntrega):
+    try:
+        direccion.habilitado = 0
+        direccion.save()
+        print(f'Dirección {direccion.id_direccion_entrega} eliminada con éxito.')
+    except IntegrityError as e:
+        print(f"Error de clave única o clave foránea: {e}")
+    except OperationalError as e:
+        print(f"Error operacional (conexión perdida, tabla inexistente o BD bloqueada): {e}")
+    except DataError as e:
+        print(f"El valor ingresado NO corresponde: {e}")
+    except PeeweeException as e:
+        print(f"No se pudo eliminar por un error genérico: {e}")
