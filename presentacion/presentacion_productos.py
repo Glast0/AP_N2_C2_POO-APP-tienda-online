@@ -1,6 +1,6 @@
 from decimal import Decimal, InvalidOperation
 from negocio.negocio_productos import (
-    crear_producto, lista_productos, obtener_producto, modificar_producto, categoria_existe)
+    crear_producto, lista_productos, obtener_producto, modificar_producto, categoria_existe, eliminar_producto)
 from negocio.negocio_categoria import lista_categorias
 from presentacion.presentacion_pedidos import pedir_entero
 
@@ -102,3 +102,24 @@ def solicitar_modificacion_producto():
             id_categoria = None
 
     modificar_producto(producto.id_producto, nombre, descripcion, precio, stock, id_categoria)
+
+def solicitar_eliminacion_producto():
+    print('\nProductos disponibles:')
+    lista_productos()
+
+    producto = None
+    while producto is None:
+        id_producto = pedir_entero('Ingrese el Id del producto a eliminar (0 para cancelar): ')
+        if id_producto == 0:
+            print('Eliminación cancelada.')
+            return
+        producto = obtener_producto(id_producto)
+        if producto is None:
+            print(f'El producto con Id {id_producto} no existe. Intente nuevamente.')
+
+    confirmar = input(f'¿Eliminar el producto "{producto.nombre_producto}"? [s/n]: ').strip().lower()
+    if confirmar != 's':
+        print('Eliminación cancelada.')
+        return
+
+    eliminar_producto(producto.id_producto)

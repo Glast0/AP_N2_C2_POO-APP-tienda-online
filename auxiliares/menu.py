@@ -13,7 +13,7 @@ menu_superior = {
 }
 
 menu_apptienda = {
-    '1':'Gestión Lol',
+    '1':'',
     '2':'Gestión Categorías',
     '0':'Volver al menú anterior'
 }
@@ -38,6 +38,7 @@ menu_productos = {
     '1': 'Listar productos',
     '2': 'Crear producto',
     '3': 'Modificar Producto',
+    '4': 'Eliminar producto',
 }
 
 menu_direcciones = {
