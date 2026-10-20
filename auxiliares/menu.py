@@ -71,6 +71,7 @@ menu_envios = {
     '0': 'Volver',
     '1': 'Listar envíos',
     '2': 'Registrar envío',
+    '3': 'Entregar envío',
 }
 
 menu_carritos = {
