@@ -3,7 +3,7 @@ from auxiliares import nombre_aplicacion,version_aplicacion,menu_superior,menu_a
 
 from auxiliares import menu_categorias
 from negocio.negocio_categoria import lista_categorias
-from presentacion.presentacion_categorias import solicitar_datos_categoria, solicitar_modificacion_categoria
+from presentacion.presentacion_categorias import solicitar_datos_categoria, solicitar_modificacion_categoria, solicitar_eliminacion_categoria
 
 from auxiliares import menu_clientes
 from negocio.negocio_cliente import lista_clientes
@@ -56,7 +56,7 @@ def menu_principal():
             for numero, nombre in menu_categorias.items():
                 print(f'[{numero}] - {nombre}')
 
-            opcion_sub_menu = input('\nIngrese su opción [0-3]: ')
+            opcion_sub_menu = input('\nIngrese su opción [0-4]: ')
             
             if opcion_sub_menu == '1':
                 lista_categorias()
@@ -66,6 +66,9 @@ def menu_principal():
 
             elif opcion_sub_menu == '3':
                 solicitar_modificacion_categoria()
+
+            elif opcion_sub_menu == '4':
+                solicitar_eliminacion_categoria()
 
         #----------------------------------  CLIENTES  ----------------------------------
         elif opcion_usuario == '3':
