@@ -2,7 +2,7 @@ from datetime import date
 from prettytable import PrettyTable
 from datos.repositorios.repositorio_carritos import (
     listado_carritos, buscar_carrito, buscar_carrito_de_cliente, listado_items,
-    buscar_item_en_carrito, guardar_carrito, guardar_item)
+    buscar_item_en_carrito, guardar_carrito, guardar_item, eliminar_carrito_en_bd)
 from datos.repositorios.repositorio_clientes import buscar_cliente
 from datos.repositorios.repositorio_productos import buscar_producto
 from datos.modelos.carritos import Carrito, ItemCarrito
@@ -75,3 +75,10 @@ def agregar_item(id_carrito, id_producto, cantidad):
     nuevo.cantidad = cantidad
     nuevo.precio_unitario = producto.precio  # precio del momento
     guardar_item(nuevo)
+
+def eliminar_carrito(id_carrito):
+    if buscar_carrito(id_carrito) is None:
+        print(f'El carrito con Id {id_carrito} no existe. Carrito NO eliminado.')
+        return
+
+    eliminar_carrito_en_bd(id_carrito)

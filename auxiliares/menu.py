@@ -76,4 +76,5 @@ menu_carritos = {
     '2': 'Crear carrito',
     '3': 'Agregar producto a un carrito',
     '4': 'Ver productos de un carrito',
+    '5': 'Eliminar carrito',
 }
