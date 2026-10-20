@@ -1,5 +1,5 @@
 import sys
-from auxiliares import nombre_aplicacion,version_aplicacion,menu_superior,menu_apptienda
+from auxiliares import nombre_aplicacion, version_aplicacion, menu_superior
 
 from auxiliares import menu_categorias
 from negocio.negocio_categoria import lista_categorias
@@ -41,18 +41,10 @@ def menu_principal():
     while True:
         for clave,valor in menu_superior.items():
             print(f'[{clave}] - {valor}')
-        opcion_usuario = input('\nIngrese su opción [1-9]: ')
-
-        if opcion_usuario == '1':
-            for numero,nombre in menu_apptienda.items():
-                print(f'[{numero}] - {nombre}')
-
-            opcion_sub_menu = input('\nIngrese su opción [0-2]: ')
-            if opcion_sub_menu == '1':  
-                lista_carritos()
+        opcion_usuario = input('\nIngrese su opción [1-8]: ')
 
         #----------------------------------  CATEGORIAS  ----------------------------------
-        elif opcion_usuario == '2':
+        if opcion_usuario == '1':
             for numero, nombre in menu_categorias.items():
                 print(f'[{numero}] - {nombre}')
 
@@ -71,7 +63,7 @@ def menu_principal():
                 solicitar_eliminacion_categoria()
 
         #----------------------------------  CLIENTES  ----------------------------------
-        elif opcion_usuario == '3':
+        elif opcion_usuario == '2':
             for numero, nombre in menu_clientes.items():
                 print(f'[{numero}] - {nombre}')
         
@@ -88,7 +80,7 @@ def menu_principal():
             elif opcion_sub_menu == '4':
                 solicitar_eliminacion_cliente()
         #----------------------------------  PRODUCTOS  ----------------------------------
-        elif opcion_usuario == '4':
+        elif opcion_usuario == '3':
             for numero, nombre in menu_productos.items():
                 print(f'[{numero}] - {nombre}')
 
@@ -106,7 +98,7 @@ def menu_principal():
                 solicitar_eliminacion_producto()
                 
         #----------------------------------  DIRECCIONES  ----------------------------------
-        elif opcion_usuario == '5':
+        elif opcion_usuario == '4':
             for numero, nombre in menu_direcciones.items():
                 print(f'[{numero}] - {nombre}')
 
@@ -124,7 +116,7 @@ def menu_principal():
                 solicitar_eliminacion_direccion()
 
         #----------------------------------  PEDIDOS  ----------------------------------
-        elif opcion_usuario == '6':
+        elif opcion_usuario == '5':
             for numero, nombre in menu_pedidos.items():
                 print(f'[{numero}] - {nombre}')
 
@@ -145,7 +137,7 @@ def menu_principal():
                 solicitar_cancelacion_pedido()
 
         #----------------------------------  PAGOS  ----------------------------------
-        elif opcion_usuario == '7':
+        elif opcion_usuario == '6':
             for numero, nombre in menu_pagos.items():
                 print(f'[{numero}] - {nombre}')
 
@@ -164,7 +156,7 @@ def menu_principal():
                 solicitar_rechazo_pago()
 
         #----------------------------------  ENVIOS  ----------------------------------
-        elif opcion_usuario == '8':
+        elif opcion_usuario == '7':
             for numero, nombre in menu_envios.items():
                 print(f'[{numero}] - {nombre}')
         
@@ -180,7 +172,7 @@ def menu_principal():
                 solicitar_entrega_envio()
 
         #----------------------------------  CARRITOS  ----------------------------------
-        elif opcion_usuario == '9':
+        elif opcion_usuario == '8':
             for numero, nombre in menu_carritos.items():
                 print(f'[{numero}] - {nombre}')
         

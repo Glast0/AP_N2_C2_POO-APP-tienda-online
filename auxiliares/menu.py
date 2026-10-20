@@ -1,21 +1,14 @@
 menu_superior = {
-    '1':'Gestión App tienda',
-    '2':'Gestión Categorías',
-    '3':'Gestión Clientes',
-    '4':'Gestión Productos',
-    '5':'Gestión Direccion_Entrega',
-    '6':'Gestión Pedidos',
-    '7':'Gestión Pagos',
-    '8':'Gestión Envíos',
-    '9':'Gestión Carritos',
+    '1':'Gestión Categorías',
+    '2':'Gestión Clientes',
+    '3':'Gestión Productos',
+    '4':'Gestión Direccion_Entrega',
+    '5':'Gestión Pedidos',
+    '6':'Gestión Pagos',
+    '7':'Gestión Envíos',
+    '8':'Gestión Carritos',
     
     '0':'Salir'
-}
-
-menu_apptienda = {
-    '1':'',
-    '2':'Gestión Categorías',
-    '0':'Volver al menú anterior'
 }
 
 menu_categorias = {
