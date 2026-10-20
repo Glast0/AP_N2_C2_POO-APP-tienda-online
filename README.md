@@ -23,7 +23,7 @@ password='tu_contrasena'
 El usuario debe existir en tu MySQL local y coincidir con el .env:
 
 CREATE USER 'glast'@'localhost' IDENTIFIED BY 'tu_contrasena';
-GRANT ALL PRIVILEGES ON sistema_pyme.* TO 'glast'@'localhost';
+GRANT ALL PRIVILEGES ON apptienda.* TO 'glast'@'localhost';
 FLUSH PRIVILEGES;
 
 Scripts SQL
