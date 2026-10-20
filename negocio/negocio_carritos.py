@@ -2,7 +2,7 @@ from datetime import date
 from prettytable import PrettyTable
 from datos.repositorios.repositorio_carritos import (
     listado_carritos, buscar_carrito, buscar_carrito_de_cliente, listado_items,
-    buscar_item_en_carrito, guardar_carrito, guardar_item, buscar_item, actualizar_item)
+    buscar_item_en_carrito, guardar_carrito, guardar_item, buscar_item, actualizar_item, eliminar_carrito_en_bd)
 from datos.repositorios.repositorio_clientes import buscar_cliente
 from datos.repositorios.repositorio_productos import buscar_producto
 from datos.modelos.carritos import Carrito, ItemCarrito
@@ -126,3 +126,10 @@ def comprar_carrito(id_carrito, id_direccion):
 
     # crear_pedido aplica todas las reglas: cliente, dirección, stock y precio actual
     crear_pedido(carrito.id_cliente, id_direccion, lista_items, ids_items)
+
+def eliminar_carrito(id_carrito):
+    if buscar_carrito(id_carrito) is None:
+        print(f'El carrito con Id {id_carrito} no existe. Carrito NO eliminado.')
+        return
+
+    eliminar_carrito_en_bd(id_carrito)

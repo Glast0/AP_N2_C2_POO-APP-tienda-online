@@ -82,4 +82,5 @@ menu_carritos = {
     '4': 'Ver productos de un carrito',
     '5': 'Cambiar cantidad de un producto',
     '6': 'Comprar carrito (crear pedido)',
+    '7': 'Eliminar carrito',
 }
