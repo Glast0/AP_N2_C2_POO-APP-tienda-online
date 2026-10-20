@@ -1,4 +1,4 @@
-from negocio.negocio_cliente import crear_cliente, lista_clientes, obtener_cliente, modificar_cliente
+from negocio.negocio_cliente import crear_cliente, lista_clientes, obtener_cliente, modificar_cliente, eliminar_cliente
 from presentacion.presentacion_pedidos import pedir_entero
 
 def solicitar_datos_cliente():
@@ -55,3 +55,24 @@ def solicitar_modificacion_cliente():
         telefono = None
 
     modificar_cliente(cliente.id_cliente, nombre, rut, email, telefono)
+
+def solicitar_eliminacion_cliente():
+    print('\nClientes disponibles:')
+    lista_clientes()
+
+    cliente = None
+    while cliente is None:
+        id_cliente = pedir_entero('Ingrese el Id del cliente a eliminar (0 para cancelar): ')
+        if id_cliente == 0:
+            print('Eliminación cancelada.')
+            return
+        cliente = obtener_cliente(id_cliente)
+        if cliente is None:
+            print(f'El cliente con Id {id_cliente} no existe. Intente nuevamente.')
+
+    confirmar = input(f'¿Eliminar al cliente "{cliente.nombre}"? [s/n]: ').strip().lower()
+    if confirmar != 's':
+        print('Eliminación cancelada.')
+        return
+
+    eliminar_cliente(cliente.id_cliente)
