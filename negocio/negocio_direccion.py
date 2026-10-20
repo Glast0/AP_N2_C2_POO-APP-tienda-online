@@ -1,5 +1,6 @@
 from datos.repositorios.repositorio_direcciones import (
-    listado_direcciones, guardar_direccion, buscar_direccion, actualizar_direccion, direcciones_de_cliente)
+    listado_direcciones, guardar_direccion, buscar_direccion, actualizar_direccion, direcciones_de_cliente, deshabilitar_direccion)
+from datos.repositorios.repositorio_pedidos import pedidos_en_curso_de_direccion
 from datos.repositorios.repositorio_clientes import buscar_cliente
 from prettytable import PrettyTable
 from datos.modelos.direccion_entrega import DireccionEntrega
@@ -68,3 +69,18 @@ def lista_direcciones_de_cliente(id_cliente):
 def direccion_es_del_cliente(id_direccion, id_cliente):
     direccion = buscar_direccion(id_direccion)
     return direccion is not None and direccion.id_cliente == id_cliente
+
+def eliminar_direccion(id_direccion):
+    direccion = buscar_direccion(id_direccion)
+    if direccion is None:
+        print(f'La dirección con Id {id_direccion} no existe. Dirección NO eliminada.')
+        return
+    if direccion.habilitado == 0:
+        print('La dirección ya está deshabilitada. Nada que hacer.')
+        return
+    if pedidos_en_curso_de_direccion(id_direccion).count() > 0:
+        print('La dirección está siendo usada por pedidos en curso. '
+              'Dirección NO eliminada.')
+        return
+
+    deshabilitar_direccion(direccion)

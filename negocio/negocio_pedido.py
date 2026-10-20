@@ -135,3 +135,7 @@ def cancelar_pedido(id_pedido):
         return
 
     cancelar_pedido_en_bd(id_pedido, ESTADOS_CANCELABLES)
+
+def pedidos_en_curso_de_direccion(id_direccion: int):
+    return Pedido.select().where(
+        (Pedido.id_direccion_entrega == id_direccion) & (Pedido.id_estado_pedido.in_([1, 2, 3, 4])))

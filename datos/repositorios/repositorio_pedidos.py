@@ -109,3 +109,7 @@ def cancelar_pedido_en_bd(id_pedido: int, estados_cancelables: tuple):
         print(f"Error operacional (conexión perdida, tabla inexistente o BD bloqueada): {e}")
     except PeeweeException as e:
         print(f"No se pudieron actualizar los datos por un error genérico: {e}")
+
+def pedidos_en_curso_de_direccion(id_direccion: int):
+    return Pedido.select().where(
+        (Pedido.id_direccion_entrega == id_direccion) & (Pedido.id_estado_pedido.in_([1, 2, 3, 4])))

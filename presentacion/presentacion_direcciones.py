@@ -1,5 +1,5 @@
 from negocio.negocio_direccion import (
-    crear_direccion, lista_direcciones, obtener_direccion, modificar_direccion)
+    crear_direccion, lista_direcciones, obtener_direccion, modificar_direccion, eliminar_direccion)
 from negocio.negocio_cliente import lista_clientes
 from presentacion.presentacion_pedidos import pedir_entero
 
@@ -52,3 +52,24 @@ def solicitar_modificacion_direccion():
     ciudad = input('Nueva ciudad (Enter para mantener): ') or direccion.ciudad
 
     modificar_direccion(direccion.id_direccion_entrega, calle, numero, comuna, ciudad)
+
+def solicitar_eliminacion_direccion():
+    print('\nDirecciones disponibles:')
+    lista_direcciones()
+
+    direccion = None
+    while direccion is None:
+        id_direccion = pedir_entero('Ingrese el Id de la dirección a eliminar (0 para cancelar): ')
+        if id_direccion == 0:
+            print('Eliminación cancelada.')
+            return
+        direccion = obtener_direccion(id_direccion)
+        if direccion is None:
+            print(f'La dirección con Id {id_direccion} no existe. Intente nuevamente.')
+
+    confirmar = input(f'¿Eliminar la dirección "{direccion.calle} {direccion.numero}"? [s/n]: ').strip().lower()
+    if confirmar != 's':
+        print('Eliminación cancelada.')
+        return
+
+    eliminar_direccion(direccion.id_direccion_entrega)
