@@ -1,0 +1,39 @@
+Vamos a trabajar con usuario
+vamos a trabajar un sistema de login (control de usuario)
+guardar usuario  
+hacer login 
+
+Primero tabla de usuario (basedatos)
+Segundo modelo usuario 
+Tercero repositorio usuario (lista_usuario,crear_usuario)
+Cuarto Negocio 
+
+Lo visual se veria primero se pregunta el rol o simplemente el rut (para poder saber si es un administrador o un cliente) luego deberia salir el interfas
+
+
+Bienvenido a apptiendaonline
+Inciar sesion usuario:
+    Ingrese rut:
+    Ingrese constraseña:
+        Incia sesion normal.
+
+
+Inciar sesion Cargos:
+    Ingrese su rol:
+        Ingrese rut:
+        Ingrese constraseña:
+
+
+(Opciones de cargos:
+ADMINISTRADOR (PUEDE HABILITAR COSAS Y EDITAR TODO)
+OBSERVADOR (PUEDE VER EL SISTEMA GENERAL SIN INTERVENIR EN NADA)
+JUNIOR (PUEDE EDITAR NOMBRE DE CATEGORIAS,COSAS)
+)
+    
+
+Iniciar como invitado: 
+    Interfaz normal
+
+
+Vamos a poner un ADMINISTRADOR PRINCIPAL que puede dar roles a deferentes ruts (si quiere que sea administrador(poder editar cosas))
+
