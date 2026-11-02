@@ -1,0 +1,7 @@
+expresion regular de correo, fecha de nacimiento 
+^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$
+importar la libreria re 
+regex para fecha con formato dd/mm/yyyy
+^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/(19|20)\d\d$
+
+se creo el usuario y el metodo login se esta puliendo con el tema del correr, fecha de nacimiento y asi
