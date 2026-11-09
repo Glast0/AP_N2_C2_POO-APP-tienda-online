@@ -1,88 +1,31 @@
 from datos.repositorios.repositorio_clientes import (
-    listado_clientes, guardar_cliente)
-from datos.repositorios.repositorio_pedidos import pedidos_en_curso_de_cliente
+    listado_usuarios, guardar_usuarios)
 from prettytable import PrettyTable
-from datos.modelos.cliente import Cliente
-from auxiliares.validaciones import rut_valido
+from datos.modelos.usuario import Usuario
 from datetime import datetime
+from auxiliares.mensajes import mensaje_error
 
-def lista_usuarios():
-    tabla = PrettyTable()
-    tabla.field_names = ['Id', 'Nombre', 'RUT', 'Email', 'Teléfono', 'Habilitado']
+def lista_usuarios(tabla_usuarios:PrettyTable):
+    usuarios = listado_usuarios()
+    tabla_usuarios.field_names = ['Id','RUT','Nombre Completo','Correo','Fecha Nacimiento']
+    if usuarios:
+        for usuario in usuarios:
+            nombre_completo = f'{usuario.nombre} {usuario.apellido}'
+            tabla_usuarios.add_row([usuario.id_usuario, usuario.rut, nombre_completo, usuario.correo, usuario.fecha_nacimiento])
+        return tabla_usuarios
 
-    clientes = listado_clientes()
-    if clientes:
-        for c in clientes:
-            tabla.add_row([c.id_cliente, c.nombre, c.rut, c.email, c.telefono,
-                           ('Deshabilitado', 'Habilitado')[c.habilitado]])
-        print(tabla)
+def crear_usuario(str_rut, str_nombre, str_apellido, str_correo, fecha_nacimiento, str_contrasenia):
+    nuevo_usuario = Usuario()
+    try:
+        nuevo_usuario.rut = str_rut
+        nuevo_usuario.nombre = str_nombre.title()
+        nuevo_usuario.apellido = str_apellido.title()
+        nuevo_usuario.correo = str_correo
+        nuevo_usuario.fecha_nacimiento = fecha_nacimiento
+        nuevo_usuario.password = str_contrasenia
+        nuevo_usuario.fecha_incorporacion = datetime.now()
+        nuevo_usuario.habilitado = True
 
-def crear_cliente(nombre, rut, email, telefono):
-    # Regla de negocio: validar antes de tocar la base de datos
-    if '@' not in email or '.' not in email:
-        print('El email ingresado no es válido. Cliente NO guardado.')
-        return
-
-    nuevo = Cliente()
-    nuevo.nombre = nombre
-    nuevo.rut = rut
-    nuevo.email = email
-    nuevo.telefono = telefono
-    guardar_cliente(nuevo)
-
-def obtener_cliente(id_cliente):
-    return buscar_cliente(id_cliente)
-
-def modificar_cliente(id_cliente, nombre, rut, email, telefono):
-    cliente = buscar_cliente(id_cliente)
-    if cliente is None:
-        print(f'El cliente con Id {id_cliente} no existe. Cambios NO guardados.')
-        return
-    if nombre.strip() == '':
-        print('El nombre no puede quedar vacío. Cambios NO guardados.')
-        return
-
-    # Solo se valida lo que cambió, para no rechazar datos antiguos que ya estaban en la BD
-    if rut != cliente.rut:
-        if not rut_valido(rut):
-            print('El RUT ingresado no es válido. Cambios NO guardados.')
-            return
-        otro = buscar_cliente_por_rut(rut)
-        if otro is not None and otro.id_cliente != id_cliente:
-            print('Ese RUT ya pertenece a otro cliente. Cambios NO guardados.')
-            return
-
-    if email != cliente.email:
-        if '@' not in email or '.' not in email:
-            print('El email ingresado no es válido. Cambios NO guardados.')
-            return
-        otro = buscar_cliente_por_email(email)
-        if otro is not None and otro.id_cliente != id_cliente:
-            print('Ese email ya pertenece a otro cliente. Cambios NO guardados.')
-            return
-
-    if (nombre == cliente.nombre and rut == cliente.rut
-            and email == cliente.email and telefono == cliente.telefono):
-        print('No hubo cambios. Nada que actualizar.')
-        return
-
-    cliente.nombre = nombre
-    cliente.rut = rut
-    cliente.email = email
-    cliente.telefono = telefono
-    actualizar_cliente(cliente)
-
-def eliminar_cliente(id_cliente):
-    cliente = buscar_cliente(id_cliente)
-    if cliente is None:
-        print(f'El cliente con Id {id_cliente} no existe. Cliente NO eliminado.')
-        return
-    if cliente.habilitado == 0:
-        print('El cliente ya está deshabilitado. Nada que hacer.')
-        return
-    if pedidos_en_curso_de_cliente(id_cliente).count() > 0:
-        print('El cliente tiene pedidos en curso. Espere a que terminen o cancélelos. '
-              'Cliente NO eliminado.')
-        return
-
-    deshabilitar_cliente(cliente)
+        guardar_usuarios(nuevo_usuario)
+    except Exception as error:
+        print(f'{mensaje_error} {error}')

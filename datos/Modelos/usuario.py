@@ -1,20 +1,23 @@
-from peewee import Model, OperationalError
+from peewee import Model,AutoField, CharField, IntegerField, DateField, SQL
 from datos.conexion import conectar_db
+from auxiliares import defecto
 
 database = conectar_db()
 
 class BaseModel(Model):
-    class META:
+    class Meta:
         database=database
+
 class Usuario(BaseModel):
-    id_usuario
-    rut 
-    nombre
-    apellido
-    correo
-    pais 
-    fecha_nacimiento
-    genero
-    fecha_incorporacion
-    habilitado
-    password   
+    id_usuario = AutoField()
+    rut = CharField(max_length=12, null=True, unique= True)
+    nombre =CharField(max_length=25)
+    apellido = CharField(max_length=25)
+    correo = CharField()
+    fecha_nacimiento = DateField(null=True)
+    fecha_incorporacion = DateField()
+    habilitado = IntegerField(constraints=[SQL(defecto)])
+    password = CharField(max_length=60)
+
+class Meta:
+    table_name= 'usuarios'

@@ -1,0 +1,10 @@
+modelo usuario LISTO 
+sql usuario LISTO
+
+repositorio usuario CASI
+Negocio usuario CASI
+menu usuario LISTO 
+
+
+VAMOS A COLOCAR ROLES??
+

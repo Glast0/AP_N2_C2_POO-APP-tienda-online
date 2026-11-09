@@ -20,6 +20,14 @@ def guardar_usuario(usuario: Usuario):
     except PeeweeException as e:
         print(f"No se pudieron guardar los datos por un error genérico: {e}")
 
+
+def obtener_usuario_rut(rut=""):
+    if rut != ' ':
+        Usuario_encontrado = Usuario.get(Usuario.rut == rut)
+    return Usuario_encontrado
+
+
+
 def buscar_usuario(id_usuario: int):
     return Usuario.get_or_none(Usuario.id_usuario == id_usuario)
 

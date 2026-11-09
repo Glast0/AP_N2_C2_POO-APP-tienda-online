@@ -34,6 +34,11 @@ from negocio.negocio_carritos import lista_carritos
 from presentacion.presentacion_carritos import (
     solicitar_datos_carrito, solicitar_datos_item, solicitar_items_carrito, solicitar_cambio_cantidad_item, solicitar_compra_carrito, solicitar_eliminacion_carrito)
 
+from auxiliares import menu_usuarios
+from negocio.negocio_carritos import lista_usuarios
+from presentacion.presentacion_carritos import (
+    solicitar_datos_usuarios, solicitar_datos_item)
+
 def menu_principal():
     print(f'\n{nombre_aplicacion} - {version_aplicacion}')
     print(f'{'=' * len(nombre_aplicacion)}==={'=' * len(version_aplicacion)}\n')
@@ -198,11 +203,29 @@ def menu_principal():
             elif opcion_sub_menu == '7':
                 solicitar_eliminacion_carrito()
 
+                #----------------------------------  ENVIOS  ----------------------------------
+        elif opcion_usuario == '9':
+            for numero, nombre in menu_usuarios.items():
+                print(f'[{numero}] - {nombre}')
+        
+            opcion_sub_menu = input('\nIngrese su opción [0-2]: ')
+
+            if opcion_sub_menu == '1':
+                lista_usuarios()
+
+            elif opcion_sub_menu == '2':
+                solicitar_datos_usuarios()
+
+            elif opcion_sub_menu == '3':
+                solicitar_crear_usuarios()
+
         elif opcion_usuario == '0':
             print('Saliendo...')
             sys.exit()
 
         else:
             print('Opción ingresada NO corresponde...\nIngrese nuevamente')
+
+
 
 menu_principal()

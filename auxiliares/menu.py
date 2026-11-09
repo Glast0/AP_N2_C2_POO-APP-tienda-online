@@ -7,6 +7,7 @@ menu_superior = {
     '6':'Gestión Pagos',
     '7':'Gestión Envíos',
     '8':'Gestión Carritos',
+    '9':'Gestion Usuarios',
     
     '0':'Salir'
 }
@@ -76,4 +77,10 @@ menu_carritos = {
     '5': 'Cambiar cantidad de un producto',
     '6': 'Comprar carrito (crear pedido)',
     '7': 'Eliminar carrito',
+}
+
+menu_usuarios = {
+    '0': 'Volver',
+    '1': 'Listar usuario',
+    '2': 'Crear usuario',
 }
