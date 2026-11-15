@@ -35,18 +35,19 @@ from presentacion.presentacion_carritos import (
     solicitar_datos_carrito, solicitar_datos_item, solicitar_items_carrito, solicitar_cambio_cantidad_item, solicitar_compra_carrito, solicitar_eliminacion_carrito)
 
 from auxiliares import menu_usuarios
-from negocio.negocio_carritos import lista_usuarios
-from presentacion.presentacion_carritos import (
-    solicitar_datos_usuarios, solicitar_datos_item)
+from negocio.negocio_usuario import lista_usuarios
+from presentacion.presentacion_usuario import (
+    solicitar_datos_usuario, solicitar_modificacion_usuario, solicitar_eliminacion_usuario)
+
 
 def menu_principal():
     print(f'\n{nombre_aplicacion} - {version_aplicacion}')
-    print(f'{'=' * len(nombre_aplicacion)}==={'=' * len(version_aplicacion)}\n')
+    print(f'{"=" * len(nombre_aplicacion)}==={"=" * len(version_aplicacion)}\n')
 
     while True:
         for clave,valor in menu_superior.items():
             print(f'[{clave}] - {valor}')
-        opcion_usuario = input('\nIngrese su opción [1-8]: ')
+        opcion_usuario = input('\nIngrese su opción [0-9]: ')
 
         #----------------------------------  CATEGORIAS  ----------------------------------
         if opcion_usuario == '1':
@@ -203,22 +204,23 @@ def menu_principal():
             elif opcion_sub_menu == '7':
                 solicitar_eliminacion_carrito()
 
-                #----------------------------------  ENVIOS  ----------------------------------
+        #----------------------------------  USUARIOS  ----------------------------------
         elif opcion_usuario == '9':
             for numero, nombre in menu_usuarios.items():
                 print(f'[{numero}] - {nombre}')
-        
-            opcion_sub_menu = input('\nIngrese su opción [0-2]: ')
 
+            opcion_sub_menu = input('\nIngrese su opción [0-4]: ')
             if opcion_sub_menu == '1':
                 lista_usuarios()
 
             elif opcion_sub_menu == '2':
-                solicitar_datos_usuarios()
+                solicitar_datos_usuario()
 
             elif opcion_sub_menu == '3':
-                solicitar_crear_usuarios()
+                solicitar_modificacion_usuario()
 
+            elif opcion_sub_menu == '4':
+                solicitar_eliminacion_usuario()
         elif opcion_usuario == '0':
             print('Saliendo...')
             sys.exit()
