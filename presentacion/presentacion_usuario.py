@@ -1,4 +1,6 @@
 from getpass import getpass
+from negocio.negocio_usuario import autenticar_usuario
+from auxiliares.sesion import Sesion
 
 from negocio.negocio_usuario import (
     lista_usuarios, crear_usuario, obtener_usuario, modificar_usuario, eliminar_usuario)
@@ -108,3 +110,36 @@ def solicitar_eliminacion_usuario():
         print('Eliminación cancelada.')
         return
     eliminar_usuario(usuario.id_usuario)
+
+MAX_INTENTOS = 3
+
+def iniciar_sesion() -> bool:
+    if Sesion.activa():
+        u = Sesion.usuario_actual()
+        print(f'\nYa hay una sesión iniciada: {u.nombre} {u.apellido}.')
+        return True
+
+    print('\n--- Iniciar sesión ---')
+    for intento in range(1, MAX_INTENTOS + 1):
+        correo = input('Correo: ').strip()
+        password = getpass('Contraseña: ')
+
+        usuario = autenticar_usuario(correo, password)
+        if usuario is not None:
+            Sesion.iniciar(usuario)
+            print(f'\nBienvenido/a, {usuario.nombre} {usuario.apellido}.')
+            return True
+
+        restantes = MAX_INTENTOS - intento
+        if restantes > 0:
+            print(f'Correo o contraseña incorrectos. Intentos restantes: {restantes}')
+    print('Demasiados intentos fallidos. Volviendo al menú.')
+    return False
+
+def cerrar_sesion():
+    if not Sesion.activa():
+        print('\nNo hay ninguna sesión iniciada.')
+        return
+    usuario = Sesion.usuario_actual()
+    Sesion.cerrar()
+    print(f'\nSesión de {usuario.nombre} {usuario.apellido} cerrada.')

@@ -84,4 +84,6 @@ menu_usuarios = {
     '2': 'Crear usuario',
     '3': 'Modificar usuario',
     '4': 'Eliminar usuario',
+    '5': 'Iniciar sesión',
+    '6': 'Cerrar sesión',
 }

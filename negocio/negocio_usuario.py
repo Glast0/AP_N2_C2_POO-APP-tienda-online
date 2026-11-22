@@ -1,5 +1,6 @@
 from datetime import date
 from prettytable import PrettyTable
+from bcrypt import hashpw, gensalt, checkpw
 
 from datos.modelos.usuario import Usuario
 from datos.repositorios.repositorio_usuarios import (
@@ -58,7 +59,7 @@ def crear_usuario(rut, nombre, apellido, correo, fecha_nacimiento, password):
     nuevo.fecha_nacimiento = fecha_nacimiento
     nuevo.fecha_incorporacion = date.today()
     nuevo.habilitado = 1
-    nuevo.password = password
+    nuevo.password = hashear_password(password)
     guardar_usuario(nuevo)
 
 def modificar_usuario(id_usuario, nombre, apellido, correo, fecha_nacimiento):
@@ -102,3 +103,22 @@ def eliminar_usuario(id_usuario):
         print('El usuario ya está deshabilitado. Nada que hacer.')
         return
     deshabilitar_usuario(usuario)
+
+def hashear_password(password: str) -> str:
+    return hashpw(password.encode('utf-8'), gensalt()).decode('utf-8')
+
+def verificar_password(password: str, hash_guardado: str) -> bool:
+    try:
+        return checkpw(password.encode('utf-8'), hash_guardado.encode('utf-8'))
+    except ValueError:
+        # El valor guardado no es un hash válido (ej: usuario antiguo con texto plano)
+        return False
+
+def autenticar_usuario(correo: str, password: str):
+    """Devuelve el Usuario si las credenciales son correctas; si no, None."""
+    usuario = buscar_usuario_por_correo(correo.strip().lower())
+    if usuario is None or usuario.habilitado == 0:
+        return None
+    if not verificar_password(password, usuario.password):
+        return None
+    return usuario

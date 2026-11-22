@@ -37,7 +37,7 @@ from presentacion.presentacion_carritos import (
 from auxiliares import menu_usuarios
 from negocio.negocio_usuario import lista_usuarios
 from presentacion.presentacion_usuario import (
-    solicitar_datos_usuario, solicitar_modificacion_usuario, solicitar_eliminacion_usuario)
+    solicitar_datos_usuario, solicitar_modificacion_usuario, solicitar_eliminacion_usuario, iniciar_sesion, cerrar_sesion)
 
 
 def menu_principal():
@@ -221,13 +221,16 @@ def menu_principal():
 
             elif opcion_sub_menu == '4':
                 solicitar_eliminacion_usuario()
+
+            elif opcion_sub_menu == '5':
+                iniciar_sesion()
+
+            elif opcion_sub_menu == '6':
+                cerrar_sesion()
+
         elif opcion_usuario == '0':
             print('Saliendo...')
             sys.exit()
 
         else:
             print('Opción ingresada NO corresponde...\nIngrese nuevamente')
-
-
-
-menu_principal()
