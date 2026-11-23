@@ -96,7 +96,7 @@ Los scripts están en la carpeta `datos/sql/`. Deben ejecutarse **en este orden*
 | 1 | `datos/sql/creación base de datos.sql` | Crea la base `APPTIENDA` y las tablas del negocio |
 | 2 | `datos/sql/inserción datos base de datos.sql` | Inserta datos de ejemplo (categorías, productos, clientes, etc.) |
 | 3 | `datos/sql/datos/sql/2026.11.14_USUARIOS_Y_ROLES.sql` | Crea la tabla `usuarios` |
-| 4 | `datos/sql/datos/sql/2026.11.23_USUARIO_INICIAL.sql` | Inserta el usuario administrador inicial |
+| 4 | `datos/sql/datos/sql/2026.11.23 USUARIO INICIAL.sql` | Inserta el usuario administrador inicial |
 
 Desde la terminal, con un usuario de MySQL con permisos para crear bases de datos:
 
@@ -104,7 +104,7 @@ Desde la terminal, con un usuario de MySQL con permisos para crear bases de dato
 mysql -u root -p < "datos/sql/creación base de datos.sql"
 mysql -u root -p < "datos/sql/inserción datos base de datos.sql"
 mysql -u root -p < "datos/sql/datos/sql/2026.11.14_USUARIOS_Y_ROLES.sql"
-mysql -u root -p < "datos/sql/datos/sql/2026.11.23_USUARIO_INICIAL.sql"
+mysql -u root -p < "datos/sql/datos/sql/2026.11.23 USUARIO INICIAL.sql"
 ```
 
 También se pueden abrir y ejecutar en orden desde MySQL Workbench.
@@ -130,12 +130,10 @@ primer ingreso.
 Con el entorno virtual activado y la base de datos creada, ejecutar desde la raíz del proyecto:
 
 ```bash
-python app.py
+python main.py
 ```
 
-Se mostrará el menú principal. Para iniciar sesión, ir a **[9] Gestión Usuarios → [5] Iniciar sesión**
-e ingresar el correo y la contraseña del usuario inicial (la contraseña se muestra como `*` al escribirla).
-Desde ese mismo submenú se pueden crear, listar, modificar y deshabilitar usuarios.
+Al ejecutar la aplicación se solicitará autenticación antes de mostrar el menú principal. Ingresa el correo y la contraseña del usuario inicial; la contraseña se muestra como `*` al escribirla. Si la autenticación falla y se agotan los intentos permitidos, el menú principal no se abrirá. Una vez dentro del sistema, desde **Gestión Usuarios** se pueden crear, listar, modificar y deshabilitar usuarios.
 
 Reglas para las contraseñas de nuevos usuarios: mínimo 8 caracteres, con al menos una mayúscula, una
 minúscula, un número y un carácter especial (`@ $ # ! * &`).
