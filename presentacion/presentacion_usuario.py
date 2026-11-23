@@ -1,4 +1,4 @@
-from getpass import getpass
+from maskpass import askpass
 from negocio.negocio_usuario import autenticar_usuario
 from auxiliares.sesion import Sesion
 
@@ -35,7 +35,7 @@ def solicitar_datos_usuario():
             print('Fecha inválida, ingrese nuevamente...')
 
     while password == '':
-        password = getpass('Ingrese contraseña: ')
+        password = askpass('Ingrese contraseña: ', mask='*')
         errores = errores_contrasenia(password)
         if errores:
             print('Contraseña inválida, revise lo siguiente:')
@@ -43,7 +43,7 @@ def solicitar_datos_usuario():
                 print(f' - {e}')
             password = ''
             continue
-        if getpass('Repita la contraseña: ') != password:
+        if askpass('Repita la contraseña: ', mask='*') != password:
             print('Las contraseñas no coinciden.')
             password = ''
 
@@ -122,7 +122,7 @@ def iniciar_sesion() -> bool:
     print('\n--- Iniciar sesión ---')
     for intento in range(1, MAX_INTENTOS + 1):
         correo = input('Correo: ').strip()
-        password = getpass('Contraseña: ')
+        password = askpass('Contraseña: ', mask='*')
 
         usuario = autenticar_usuario(correo, password)
         if usuario is not None:
@@ -133,7 +133,7 @@ def iniciar_sesion() -> bool:
         restantes = MAX_INTENTOS - intento
         if restantes > 0:
             print(f'Correo o contraseña incorrectos. Intentos restantes: {restantes}')
-    print('Demasiados intentos fallidos. Volviendo al menú.')
+    print('Demasiados intentos fallidos.')
     return False
 
 def cerrar_sesion():
